@@ -12,7 +12,7 @@ service:
                       store:
                         type: Github
                         spec:
-                            connectorRef: harnessgitconnector
+                            connectorRef: webappgitconnector
                             gitFetchType: Branch
                             paths:
                                 - web_service.yaml
