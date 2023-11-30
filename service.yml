@@ -1,0 +1,24 @@
+service:
+    name: webapp
+    identifier: webapp
+    serviceDefinition:
+        type: Kubernetes
+        spec:
+            manifests:
+                - manifest:
+                    identifier: webapp
+                    type: K8sManifest
+                    spec:
+                      store:
+                        type: Github
+                        spec:
+                            connectorRef: harnessgitconnector
+                            gitFetchType: Branch
+                            paths:
+                                - web_service.yaml
+                                - deployment.yaml
+                            repoName: Web
+                            branch: master
+                        skipResourceVersioning: false
+                        enableDeclarativeRollback: false
+    gitOpsEnabled: false
