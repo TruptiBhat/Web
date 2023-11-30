@@ -15,8 +15,8 @@ service:
                             connectorRef: webappgitconnector
                             gitFetchType: Branch
                             paths:
-                                - web_service.yaml
                                 - deployment.yaml
+                                - web_service.yaml
                             repoName: Web
                             branch: main
                         skipResourceVersioning: false
