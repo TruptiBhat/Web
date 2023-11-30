@@ -15,10 +15,10 @@ service:
                             connectorRef: harnessgitconnector
                             gitFetchType: Branch
                             paths:
-                                - Deploy/webservice.yaml
-                                - Deploy/deployment.yaml
+                                - web_service.yaml
+                                - deployment.yaml
                             repoName: Web
-                            branch: master
+                            branch: main
                         skipResourceVersioning: false
                         enableDeclarativeRollback: false
     gitOpsEnabled: false
