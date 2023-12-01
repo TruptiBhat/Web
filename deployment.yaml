@@ -13,7 +13,7 @@ spec:
         app: webapp
     spec:
       containers:
-      - image: airbyte/webapp:latest
+      - image: airbyte/webapp:dev-51ff35daa3
         name: webapp
         ports:
         - containerPort: 90
