@@ -23,7 +23,7 @@ pipeline:
                     source:
                       type: Inline
                       spec:
-                        script: sudo docker login -u rajfriends1437@gmail.com -p cmVmdGtuOjAxOjE3MzM4MjM0NTE6R254aFVhWDhuNk5Yd3NLSVFIcWpQc1JkUVBr slk.jfrog.io
+                        script: docker login -u rajfriends1437@gmail.com -p cmVmdGtuOjAxOjE3MzM4MjM0NTE6R254aFVhWDhuNk5Yd3NLSVFIcWpQc1JkUVBr slk.jfrog.io
                     environmentVariables: []
                     outputVariables: []
                   timeout: 10m
