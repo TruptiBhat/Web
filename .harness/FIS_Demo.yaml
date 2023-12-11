@@ -11,65 +11,33 @@ pipeline:
         description: ""
         type: Deployment
         spec:
-          deploymentType: Kubernetes
+          deploymentType: NativeHelm
           service:
-            serviceRef: webapp
+            serviceRef: FISdemo
           environment:
             environmentRef: harnessdevenv
             deployToAll: false
             infrastructureDefinitions:
-              - identifier: harnessk8sinfra
+              - identifier: Helminfra
           execution:
             steps:
-              - stepGroup:
-                  name: Canary Deployment
-                  identifier: canaryDepoyment
-                  steps:
-                    - step:
-                        name: Canary Deployment
-                        identifier: canaryDeployment
-                        type: K8sCanaryDeploy
-                        timeout: 10m
-                        spec:
-                          instanceSelection:
-                            type: Count
-                            spec:
-                              count: 1
-                          skipDryRun: false
-                    - step:
-                        name: Canary Delete
-                        identifier: canaryDelete
-                        type: K8sCanaryDelete
-                        timeout: 10m
-                        spec: {}
-              - stepGroup:
-                  name: Primary Deployment
-                  identifier: primaryDepoyment
-                  steps:
-                    - step:
-                        name: Rolling Deployment
-                        identifier: rollingDeployment
-                        type: K8sRollingDeploy
-                        timeout: 10m
-                        spec:
-                          skipDryRun: false
-            rollbackSteps:
               - step:
-                  name: Canary Delete
-                  identifier: rollbackCanaryDelete
-                  type: K8sCanaryDelete
+                  type: HelmDeploy
+                  name: HelmDeploy_1
+                  identifier: HelmDeploy_1
+                  spec:
+                    skipDryRun: false
+                    ignoreReleaseHistFailStatus: false
+                    delegateSelectors:
+                      - kubernetes-delegate
                   timeout: 10m
-                  spec: {}
-              - step:
-                  name: Rolling Rollback
-                  identifier: rollingRollback
-                  type: K8sRollingRollback
-                  timeout: 10m
-                  spec: {}
+            rollbackSteps: []
         tags: {}
+        delegateSelectors:
+          - kubernetes-delegate
         failureStrategies:
           - onFailure:
               errors:
-                - AllErrors
+                - Unknown
               action:
-                type: StageRollback
+                type: Abort
