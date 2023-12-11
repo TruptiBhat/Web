@@ -6,46 +6,6 @@ pipeline:
   tags: {}
   stages:
     - stage:
-        name: update_docker_image
-        identifier: update_docker_image
-        description: ""
-        type: Custom
-        spec:
-          execution:
-            steps:
-              - step:
-                  type: ShellScript
-                  name: ShellScript_1
-                  identifier: ShellScript_1
-                  spec:
-                    shell: Bash
-                    onDelegate: true
-                    source:
-                      type: Inline
-                      spec:
-                        script: |-
-                          #!/bin/bash
-                          echo "Hello"
-                          # Add Docker's official GPG key:
-                          apt update
-                          apt-get install ca-certificates curl gnupg
-                          install -m 0755 -d /etc/apt/keyrings
-                          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-                          chmod a+r /etc/apt/keyrings/docker.gpg
-
-                          # Add the repository to Apt sources:
-                          echo \
-                            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-                            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-                            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-                          apt-get update
-                          docker --version
-                          docker login -u rajfriends1437@gmail.com -p cmVmdGtuOjAxOjE3MzM4MjM0NTE6R254aFVhWDhuNk5Yd3NLSVFIcWpQc1JkUVBr slk.jfrog.io
-                    environmentVariables: []
-                    outputVariables: []
-                  timeout: 10m
-        tags: {}
-    - stage:
         name: Deployment
         identifier: Deployment
         description: ""
@@ -61,6 +21,34 @@ pipeline:
               - identifier: harnessk8sinfra
           execution:
             steps:
+              - step:
+                  type: ShellScript
+                  name: ShellScript_1
+                  identifier: ShellScript_1
+                  spec:
+                    shell: Bash
+                    onDelegate: true
+                    source:
+                      type: Inline
+                      spec:
+                        script: |-
+                          #!/bin/bash
+                          # Add Docker's official GPG key:
+                          apt-get update
+                          apt-get install ca-certificates curl gnupg
+                          install -m 0755 -d /etc/apt/keyrings
+                          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+                          chmod a+r /etc/apt/keyrings/docker.gpg
+
+                          # Add the repository to Apt sources:
+                          echo \
+                            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+                            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+                            tee /etc/apt/sources.list.d/docker.list > /dev/null
+                          apt-get update
+                    environmentVariables: []
+                    outputVariables: []
+                  timeout: 10m
               - stepGroup:
                   name: Canary Deployment
                   identifier: canaryDepoyment
