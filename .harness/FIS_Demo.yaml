@@ -24,6 +24,7 @@ pipeline:
                       type: Inline
                       spec:
                         script: |-
+                          #!/bin/bash
                           echo "Hello"
                           # Add Docker's official GPG key:
                           apt-get update
